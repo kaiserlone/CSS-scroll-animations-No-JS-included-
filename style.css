@@ -1,0 +1,410 @@
+@font-face {
+    font-family: SF_Pro;
+    /* set name */
+    src: url(/SF-Pro.ttf);
+    /* url of the font */
+}
+
+/* --- RESET & BASIC STYLES --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: SF_Pro;
+    
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #111;
+    color: #eee;
+    overflow-x: hidden;
+}
+
+/* --- 1. SCROLL PROGRESS BAR --- */
+/* This bar is linked to the root scroll position */
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #ff00cc, #3333ff);
+    width: 0%;
+    z-index: 1000;
+    
+    /* The Magic: Links animation to the scrollbar */
+    animation: scroll-progress auto linear;
+    animation-timeline: scroll(root);
+}
+
+.progress-bar::before {
+    content: " ";
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #ff00cc, #3333ff);
+    width: 0%;
+    z-index: 1000;
+    animation: scroll-progress auto linear;
+    animation-timeline: scroll(root);
+    
+}
+
+@keyframes scroll-progress {
+    from {
+        width: 0%;
+    }
+    
+    to {
+        width: 100%;
+    }
+}
+
+/* --- 2. PARALLAX HERO SECTION --- */
+header {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    clip-path: inset(0);
+    border-bottom: 2px solid #333;
+}
+
+.headline {
+    /* width: 100w; */
+    background: #850C0C;
+    justify-content: center;
+    clip-path: inset(0);
+    /* overflow: hidden; */
+}
+
+@keyframes headliner {
+    to {
+        transform: translateX(5000px);
+    }
+}
+
+.headline h1 {
+    -webkit-animation: headliner linear;
+    -o-animation: headliner linear;
+    animation: headliner linear;
+    animation-timeline: scroll();
+    transform: translateX(-200px);
+    /* overflow: hidden; */
+    color: #fff;
+    
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    
+    /* Parallax: Moves background slightly as we scroll away */
+    animation: parallax-scroll linear;
+    animation-timeline: scroll(root);
+    animation-range: 0vh 100vh;
+}
+
+@keyframes parallax-scroll {
+    to {
+        transform: translateY(50%);
+        filter: brightness(0.2);
+    }
+}
+
+h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    mix-blend-mode: exclusion;
+}
+
+header h1 {
+    /* Text fades out and moves up on scroll */
+    animation: hero-text-exit linear forwards;
+    animation-timeline: view();
+    animation-range: cover 50%;
+    
+}
+
+@keyframes hero-text-exit {
+    to {
+        opacity: 0;
+        transform: translateY(-100px);
+        scale: 1;
+    }
+}
+
+/* --- LAYOUT UTILITIES --- */
+section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    gap: 2rem;
+}
+
+h2 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #aaa;
+    max-width: 600px;
+    text-align: center;
+}
+
+/* --- 3. REVEAL ANIMATIONS (Fade & Slide Up) --- */
+.reveal-text {
+    /* Triggers when element enters viewport */
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    /* Start animating when top of element hits bottom of screen */
+    /* End animating when element is fully visible */
+    animation-range: entry 10% cover 40%;
+}
+
+@keyframes fade-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 4. SCALE ANIMATIONS --- */
+.card {
+    background: #222;
+    padding: 3rem;
+    border-radius: 20px;
+    border: 1px solid #444;
+    
+    animation: scale-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+}
+
+@keyframes scale-in {
+    from {
+        scale: 0.5;
+        opacity: 0;
+        box-shadow: 0px 0px 36px #FF3535;
+    }
+    
+    to {
+        scale: 1;
+        opacity: 1;
+        box-shadow: 0px 0px 36px #35FFF9;
+    }
+}
+
+/* --- 5. HORIZONTAL SLIDE FROM SIDES --- */
+
+.split-section {
+    width: 80%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    clip-path: inset(0);
+    justify-self: center;
+    border-radius: 15px;
+    /* Prevent horizontal scrollbars */
+}
+
+.box {
+    width: 300px;
+    height: 300px;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.left-box {
+    background: #ff0055;
+    animation: slide-right linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+    
+}
+
+.right-box {
+    background: #00ddff;
+    color: #000;
+    animation: slide-left linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+    
+}
+
+@keyframes slide-right {
+    from {
+        transform: translateX(-900px) rotate(0deg);
+        opacity: 0;
+    }
+    
+    to {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-left {
+    from {
+        transform: translateX(900px) rotate(0deg);
+        opacity: 0;
+    }
+    
+    to {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+}
+
+/* --- 6. ROTATION SCROLL --- */
+.spinner-section {
+    background: #eee;
+    color: #111;
+}
+
+.spinner {
+    background: transparent;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    /* Rotates continuously as you scroll through the container */
+    animation: rotate-on-scroll linear;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+}
+
+.spin_img {
+    width: 60vw;
+    align-self: center;
+}
+
+@keyframes rotate-on-scroll {
+    from {
+        transform: rotate(0deg);
+    }
+    
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- 7. IMAGE STACK EFFECT --- */
+.gallery {
+    display: flex;
+    gap: 20px;
+    perspective: 1000px;
+    clip-path: insert(0);
+}
+
+.img-box {
+    width: 200px;
+    
+    height: 300px;
+    background-size: cover;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px black;
+    animation: cards-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 60%;
+    overflow: hidden;
+    clip-path: insert(0);
+}
+
+/* Staggered delays using CSS variables isn't supported in scroll() 
+           so we adjust animation ranges or use different classes */
+.img-1 {
+    background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=500');
+}
+
+.img-2 {
+    background-image: url('https://images.unsplash.com/photo-1550684847-75bdda21cc95?w=500');
+    /* display: none; */
+    animation-range: entry 10% cover 40%;
+    
+}
+
+.img-3 {
+    display: none;
+    background-image: url('https://images.unsplash.com/photo-1550684848-86a5d8727436?w=500');
+    /* animation-range: entry 20% cover 70%; */
+}
+
+@keyframes cards-reveal {
+    from {
+        transform: translate(200px) rotateX(90deg);
+        opacity: 0;
+    }
+    
+    to {
+        transform: translate(0) rotateX(0);
+        opacity: 1;
+    }
+}
+
+.blur-section {
+    background-color: #3c3c3c;
+    font-family: cursive;
+}
+
+.blur-section h2 {
+    font-size: 5.8vw;
+    font-family: cursive;
+    -webkit-animation: blur linear;
+    -o-animation: blur linear;
+    animation: blur linear;
+    animation-timeline: view();
+    
+    
+}
+
+@keyframes blur {
+    0% {
+        filter: blur(10px);
+    }
+    
+    55% {
+        filter: blur(0px);
+    }
+    
+    45% {
+        filter: blur(0px);
+    }
+    
+    100% {
+        filter: blur(10px);
+    }
+}
+
+footer {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
