@@ -81,24 +81,25 @@ header {
 .headline {
     width: 100vw;
     background: #850C0C;
-    justify-content: start;
+    
     clip-path: inset(0);
+    
     /* overflow: hidden; */
 }
 
 @keyframes headliner {
     to {
-        transform: translateX(5000px);
+        transform: translateX(100%);
     }
 }
 
 .headline h1 {
-width: 100%;
+
     -webkit-animation: headliner linear;
     -o-animation: headliner linear;
     animation: headliner linear;
-    animation-timeline: scroll();
-    transform: translateX(-200px);
+    animation-timeline: view();
+    
     /* overflow: hidden; */
     color: #fff;
     
@@ -376,12 +377,11 @@ p {
 
 .blur-section {
     background-color: #3c3c3c;
-    font-family: cursive;
 }
 
 .blur-section h2 {
-    font-size: 5.8vw;
-    font-family: cursive;
+    font-size: 5.9vw;
+    font-family: fantasy;
     -webkit-animation: blur linear;
     -o-animation: blur linear;
     animation: blur linear;
